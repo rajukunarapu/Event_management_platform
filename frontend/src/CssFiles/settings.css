@@ -1,0 +1,9 @@
+.menu-item{
+    padding: 8px !important;
+    border-radius: 45px !important;
+}
+
+.menu-item:hover{
+    background-color: yellowgreen !important;
+    color: black !important;
+}

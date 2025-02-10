@@ -1,4 +1,3 @@
-import React from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import NewEvent from "./NewEvent";
@@ -29,9 +28,7 @@ const EventsMenu = ({anchorEl,menuClose}) => {
         >
         {menuItems.map((item, ind) => {
           return (
-            <React.Fragment key={ind}>
-              <MenuItem className="menu-item"  onClick={()=>itemHandler(item.textName)} >{item.textName}</MenuItem>
-            </React.Fragment>
+              <MenuItem key={ind} className="menu-item"  onClick={()=>itemHandler(item.textName)} >{item.textName}</MenuItem>
           );
         })}
       </Menu>

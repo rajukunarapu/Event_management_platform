@@ -14,12 +14,27 @@ const NewEvent = () => {
     "description":description,
     "date":date,
     "location":location,
-    "attedes":attendes
+    "attendes":attendes
     
+  }
+
+  const submitEvent = async()=>{
+    const token = localStorage.getItem("token")
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/submit-event`,{
+      method:'POST',
+      headers:{
+        "Content-Type":'application/json',
+        Authorization: `Bearer ${token}`
+      },
+      body:JSON.stringify({eventDetails})
+    })
+    const data = await res.json()
+    console.log({"data":data})
   }
 
   const continueHandler = ()=>{
     if(eventName !== '' && description !== '' && date !== '' && location !== '' && !attendes !== ''){
+      submitEvent()
       console.log(eventDetails)
       setEventName('')
       setDescription('')

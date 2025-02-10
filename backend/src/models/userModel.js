@@ -10,6 +10,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  events: [
+    {
+      type: Object, 
+      required: false,
+    }
+  ]
 });
 
 module.exports = mongoose.model("userdetails", userSchema)

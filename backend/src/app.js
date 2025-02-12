@@ -10,13 +10,13 @@ const app = express();
 app.use(express.json());
 
 const corsConfig = {
-    orgin : `${process.env.FRONTEND_URL}`,
+    origin : `${process.env.FRONTEND_URL}`,
     credentials: true,
     methods : ["GET", "POST", "PUT", "DELETE","OPTIONS"],
     allowedHeaders : ["Content-Type","Authorization"]
 };
 
-app.options("",cors(corsConfig))
+app.options("*",cors(corsConfig))
 
 app.use(cors(corsConfig));
 

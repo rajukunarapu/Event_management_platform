@@ -4,4 +4,6 @@ const app = require('./app');
 
 connectDB();
 
-app.listen(process.env.PORT, ()=>console.log(`Server running on ${process.env.PORT} port`))
+modules.exports = app
+
+// app.listen(process.env.PORT, ()=>console.log(`Server running on ${process.env.PORT} port`))

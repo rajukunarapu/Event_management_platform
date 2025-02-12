@@ -62,8 +62,6 @@ const SignUp = () => {
     if (data.success === "ok") return navigate("/dashboard");
   };
 
-  
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitted(true);
@@ -169,21 +167,6 @@ const SignUp = () => {
           size="large"
         >
           Continue
-        </Button>
-
-        <Button
-          variant="contained"
-          onClick={handleSubmit}
-          color="warning"
-          sx={{
-            width: "100%",
-            mt: 3,
-            color: "white",
-            borderRadius:8
-          }}
-          size="large"
-        >
-          Guest Login
         </Button>
 
         <Stack

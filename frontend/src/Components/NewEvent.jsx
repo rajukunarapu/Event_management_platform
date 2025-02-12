@@ -20,7 +20,7 @@ const NewEvent = () => {
   }
 
   const submitEvent = async()=>{
-    const token = sessionStorage.getItem("token")
+    const token = localStorage.getItem("token")
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/submit-event`,{
       method:'POST',
       headers:{

@@ -43,7 +43,7 @@ const SignIn = () => {
 
   // api call for posting user data to server for storage
   const postData = async () => {
-    const token = sessionStorage.getItem("token")
+    const token = localStorage.getItem("token")
     const user = {
       email: userName,
       pass: password,
@@ -57,7 +57,7 @@ const SignIn = () => {
       body: JSON.stringify({ user }),
     });
     const data = await res.json();
-    sessionStorage.setItem("token", data.accessToken);
+    // sessionStorage.setItem("token", data.accessToken);
     setOpenAlert(true);
     setAlertMessage(data.message);
     setSuccess(data.success);

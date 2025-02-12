@@ -55,7 +55,7 @@ const SignUp = () => {
       body: JSON.stringify({ user }),
     });
     const data = await res.json();
-    sessionStorage.setItem("token", data.accessToken)
+    localStorage.setItem("token", data.accessToken)
     setOpenAlert(true);
     setAlertMessage(data.message);
     setSuccess(data.success);

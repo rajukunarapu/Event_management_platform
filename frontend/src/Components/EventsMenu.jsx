@@ -1,6 +1,7 @@
 import { Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import NewEvent from "./NewEvent";
+import NestedDashboard from "./NestedDashboard";
 
 
 const EventsMenu = ({anchorEl,menuClose}) => {
@@ -12,8 +13,8 @@ const EventsMenu = ({anchorEl,menuClose}) => {
     
     const [selectMenuItem, setSelectMenuItem] = useState(null)
     const itemHandler = (name)=>{
-        setSelectMenuItem(name)
-        menuClose()
+        setSelectMenuItem(name)  //It specifies which menu should be opened
+        menuClose() //closing menu item
     }
 
   return (
@@ -34,6 +35,7 @@ const EventsMenu = ({anchorEl,menuClose}) => {
       </Menu>
 
       { selectMenuItem === 'New Event' && (<NewEvent/>) }
+      { selectMenuItem === 'Past Events' && (<NestedDashboard/>) }
 
       
     </>

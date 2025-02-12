@@ -9,10 +9,15 @@ const app = express();
 // app.use(cookieparser())
 app.use(express.json());
 
-app.use(cors({
-    origin: `${process.env.FRONTEND_URL}`,
+const corsConfig = {
+    orgin : `${process.env.FRONTEND_URL}`,
     credentials: true,
-}));
+    methods : ["GET", "POST", "PUT", "DELETE"]
+};
+
+app.options("",cors(corsConfig))
+
+app.use(cors(corsConfig));
 
 app.use('/auth', authRoutes);
 app.use('/user',userRoutes);

@@ -41,13 +41,13 @@ const SignUp = () => {
     }, 2000);
   };
 
-  // api call for posting user data to server for storage
+  // signup API call
   const postData = async () => {
     const user = {
       email: userName,
       pass: password,
     };
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/signup`, {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,11 +55,14 @@ const SignUp = () => {
       body: JSON.stringify({ user }),
     });
     const data = await res.json();
+    sessionStorage.setItem("token", data.accessToken)
     setOpenAlert(true);
     setAlertMessage(data.message);
     setSuccess(data.success);
     if (data.success === "ok") return navigate("/dashboard");
   };
+
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -194,7 +197,7 @@ const SignUp = () => {
           <Link
             component={"button"}
             color="info"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/signin")}
             underline="always"
             sx={{fontSize:'17px', fontWeight:'bold', ":hover": { color: "red" } }}
           >

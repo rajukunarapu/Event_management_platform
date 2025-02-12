@@ -1,6 +1,6 @@
-import { Container, Paper, Typography } from "@mui/material"
+import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,} from "@mui/material"
 import { useEffect ,useState} from "react"
-
+// import refreshToken from "./refreshTokenLogic"
 
 const NestedDashboard = () => {
 
@@ -8,16 +8,20 @@ const NestedDashboard = () => {
   console.log(eventData)
 
   const getEventData = async()=>{
-    const token = localStorage.getItem("token")
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/event-data`, {
+    const token = sessionStorage.getItem("token")
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/event-data`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type" : "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
     const data = await res.json();
-    setEventData(data)
+    if(data.success === 'ok') return setEventData(data.eventDetails) 
+    // if(data.message === 'unauthorized' && !retry){
+    //   await refreshToken()
+    //   return getEventData(true)
+    // }
   }
 
   useEffect(()=>{
@@ -26,22 +30,33 @@ const NestedDashboard = () => {
 
   return (
     <>
-      <Container maxWidth='md' sx={{mt:10}} >
-        <Paper elevation={4} sx={{borderRadius:2,display:'flex',justifyContent:'center',alignItems:'flex-start',flexDirection:'column',p:2}} >
-            <Typography variant="h6" fontWeight={'bold'} >EVENT DETAILS:</Typography>
-            <Typography variant="body1" fontWeight={'bold'} mt={4}>Event Name:</Typography>
-            <Typography variant="body1" fontWeight={'bold'} mt={2}>{}</Typography>
-            <Typography variant="body1" fontWeight={'bold'} mt={2}>Event Description:</Typography>
-            <Typography variant="body1" fontWeight={'bold'} mt={2}>{}</Typography>
-            <Typography variant="body1" fontWeight={'bold'} mt={2}>Event Date:</Typography>
-            <Typography variant="body1" fontWeight={'bold'} mt={2}>{}</Typography>
-            <Typography variant="body1" fontWeight={'bold'} mt={2}>Event Location:</Typography>
-            <Typography variant="body1" fontWeight={'bold'} mt={2}>{}</Typography>
-            <Typography variant="body1" fontWeight={'bold'} mt={2}>Event Attendes:</Typography>
-            <Typography variant="body1" fontWeight={'bold'} mt={2}>{}</Typography>
-            
-            
-          </Paper>
+      <Container maxWidth='md' sx={{mt:10,display:'flex',justifyContent:'center',alignItems:'center'}} >
+            <TableContainer sx={{maxWidth:700,border:'2px solid lightgray',borderRadius:3}} >
+              <Table sx={{width:'100%'}} >
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{borderRight:'1px solid lightgray',fontWeight:'bolder'}} >EventName</TableCell>
+                    <TableCell sx={{borderRight:'1px solid lightgray',fontWeight:'bolder'}} >Description</TableCell>
+                    <TableCell sx={{borderRight:'1px solid lightgray',fontWeight:'bolder'}} >Date</TableCell>
+                    <TableCell sx={{borderRight:'1px solid lightgray',fontWeight:'bolder'}} >Location</TableCell>
+                    <TableCell sx={{fontWeight:'bolder'}} >Attendes</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {
+                    eventData.map((item,ind)=>(
+                      <TableRow key={ind} >
+                        <TableCell sx={{borderRight:'1px solid lightgray',}} >{item.name}</TableCell>
+                        <TableCell sx={{borderRight:'1px solid lightgray',}} >{item.description}</TableCell>
+                        <TableCell sx={{borderRight:'1px solid lightgray',}} >{item.date}</TableCell>
+                        <TableCell sx={{borderRight:'1px solid lightgray',}} >{item.location}</TableCell>
+                        <TableCell sx={{}} >{item.attendes}</TableCell>
+                      </TableRow>
+                    ))
+                  }
+                </TableBody>
+              </Table>
+            </TableContainer>          
       </Container>
     </>
   )

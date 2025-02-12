@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  events: [
+  eventsDetails: [
     {
       type: Object, 
       required: false,

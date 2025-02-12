@@ -14,7 +14,7 @@ import {
   Box,
 } from "@mui/material";
 
-const Login = () => {
+const SignIn = () => {
   // navigate
   const navigate = useNavigate();
 
@@ -43,41 +43,28 @@ const Login = () => {
 
   // api call for posting user data to server for storage
   const postData = async () => {
+    const token = sessionStorage.getItem("token")
     const user = {
       email: userName,
       pass: password,
     };
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/login`, {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({ user }),
     });
     const data = await res.json();
-    localStorage.setItem("token", data.token);
+    sessionStorage.setItem("token", data.accessToken);
     setOpenAlert(true);
     setAlertMessage(data.message);
     setSuccess(data.success);
+    if(data.success === 'ok') return navigate('/dashboard')
   };
 
-  //for access to dashborad
-  const accessDashboard = async () => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/dashboard`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await res.json();
-    setAlertMessage(data.message);
-    setSuccess(data.success);
-    if (data.success === "ok") return navigate("/dashboard");
-  };
 
-  //
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -89,7 +76,6 @@ const Login = () => {
       ) {
         setIsSubmitted(false);
         postData();
-        accessDashboard();
         setUserName("");
         setPassword("");
       }
@@ -254,4 +240,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignIn

@@ -1,5 +1,6 @@
 import { Box, Container, TextField, Typography,Button } from "@mui/material";
 import { useState } from "react";
+// import refreshToken from "./refreshTokenLogic";
 
 const NewEvent = () => {
 
@@ -19,8 +20,8 @@ const NewEvent = () => {
   }
 
   const submitEvent = async()=>{
-    const token = localStorage.getItem("token")
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/submit-event`,{
+    const token = sessionStorage.getItem("token")
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/user/submit-event`,{
       method:'POST',
       headers:{
         "Content-Type":'application/json',
@@ -29,6 +30,10 @@ const NewEvent = () => {
       body:JSON.stringify({eventDetails})
     })
     const data = await res.json()
+    // if(data.message === 'unauthorized' && !retry){
+    //   await refreshToken();
+    //   return submitEvent(true)
+    // }
     console.log({"data":data})
   }
 
